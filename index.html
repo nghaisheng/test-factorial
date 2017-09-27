@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Factorial Test</title>
+	<style type="text/css">
+		.error {
+			color: red;
+		}
+		#result {
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<p>Please fill the number to see the factorial result below (1 - 100)</p>
+	<input type="number" name="number1" id="number1" />
+	<button>Result</button>
+	<p class="error"></p>
+	<p id="result"></p>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/decimal.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			function getFactorial(value) {
+				var result = 1;
+				for (var i = value; i >= 1; i--) {
+					result *= i;
+				}
+				return result;
+
+				// if (value === 1) return 1;
+				// return value * getFactorial(value-1);
+			}
+
+			$('button').click(function() {
+				var num1 = $('#number1').val();
+				$('.error').text('');
+				$('#result').text('');
+				if (num1 === '' || isNaN(num1)) {
+					$('.error').text('The input must be a number.');
+					return;
+				}
+				if (num1 < 1) {
+					$('.error').text('The input may not be lower than 1.');
+					return;
+				}
+				if (num1 > 100) {
+					$('.error').text('The input may not be higher than 100.');
+					return;
+				}
+				var result = new Decimal(getFactorial($('#number1').val())).toFixed().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				// var result = new Decimal(15511210043330985984000000).toFixed();
+				console.log(result);
+				$('#result').text(result);
+			});
+		});
+	</script>
+</body>
+</html>
